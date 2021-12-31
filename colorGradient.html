@@ -78,15 +78,19 @@
       const linearDirection = document.getElementsByName('direction')[0];
 
       // 초기값
-      let prop = window.getComputedStyle(gradient, null).getPropertyValue('background-image');
-      code.innerText = prop;
+      function current() {
+        let prop = window.getComputedStyle(gradient, null).getPropertyValue('background-image');
+        code.innerText = prop;
+      }
 
       function changeColor() {
-        let property =
-          (gradient.style.background = `linear-gradient(${linearDirection.value}, ${color1.value}, ${color2.value})`);
+        gradient.style.background = `linear-gradient(${linearDirection.value}, ${color1.value}, ${color2.value})`;
 
-        code.innerText = property;
+        current();
       }
+
+      // 초기 code값 설정
+      current();
 
       select.addEventListener('change', changeColor);
       color1.addEventListener('input', changeColor);
