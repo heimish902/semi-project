@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Gradient Generate</title>
+    <style>
+      body {
+        display: grid;
+        width: 100vw;
+        height: 100vh;
+        place-items: center;
+        color: #035aab;
+        text-align: center;
+        overflow: hidden;
+      }
+      .generate {
+        width: 350px;
+        height: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+      }
+      .gradient {
+        width: 350px;
+        height: 200px;
+        border: 2px solid #fff;
+        box-shadow: 0 0 10px rgba(1, 1, 1, 0.35);
+        background: linear-gradient(to right, #ffaaaa, #734c8f);
+      }
+      .code {
+        margin: 30px 0;
+        padding: 10px 15px;
+        letter-spacing: 1px;
+        box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+      }
+      input {
+        width: 70px;
+        height: 40px;
+        margin: 20px 10px 0 0;
+        border: none;
+        float: left;
+      }
+      select {
+        width: 130px;
+        height: 35px;
+        margin-top: 25px;
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="generate">
+      <div class="gradient"></div>
+      <div class="code"></div>
+      <input type="color" class="color1" value="#ffaaaa" />
+      <input type="color" class="color2" value="#734c8f" />
+      <select name="direction">
+        <option value="to right">to right</option>
+        <option value="to right bottom">to right bottom</option>
+        <option value="to right top">to right top</option>
+        <option value="to left">to left</option>
+        <option value="to left bottom">to left bottom</option>
+        <option value="to left top">to left top</option>
+        <option value="to bottom">to bottom</option>
+        <option value="to top">to top</option>
+      </select>
+    </div>
+
+    <script>
+      const code = document.querySelector('.code');
+      const gradient = document.querySelector('.gradient');
+      let color1 = document.querySelector('.color1');
+      let color2 = document.querySelector('.color2');
+
+      const select = document.querySelector('select[name="direction"]');
+      const linearDirection = document.getElementsByName('direction')[0];
+
+      // 초기값
+      let prop = window.getComputedStyle(gradient, null).getPropertyValue('background-image');
+      code.innerText = prop;
+
+      function changeColor() {
+        let property =
+          (gradient.style.background = `linear-gradient(${linearDirection.value}, ${color1.value}, ${color2.value})`);
+
+        code.innerText = property;
+      }
+
+      select.addEventListener('change', changeColor);
+      color1.addEventListener('input', changeColor);
+      color2.addEventListener('input', changeColor);
+    </script>
+  </body>
+</html>
