@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Color Generator</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        display: grid;
+        height: 100vh;
+        place-items: center;
+        overflow: hidden;
+      }
+      .generator {
+        width: 350px;
+        padding: 3em 2em;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+      }
+      h1 {
+        margin: 0 auto 30px auto;
+        font-size: 28px;
+        text-align: center;
+        color: #09599a;
+      }
+      .color {
+        opacity: 1;
+        width: 100%;
+        height: 180px;
+        margin: 0 auto 30px auto;
+        border: 5px solid #fff;
+        border-radius: 5px;
+        background-color: #fac000;
+        box-shadow: 0 0 20px rgba(0, 139, 253, 0.25);
+      }
+      .color.show {
+        animation: showColor 0.5s;
+      }
+      @keyframes showColor {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .code {
+        width: 100%;
+        margin-bottom: 30px;
+        padding: 10px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 139, 253, 0.25);
+      }
+      input {
+        margin-bottom: 5px;
+        font-size: 1em;
+        border: none;
+        outline: none;
+        background-color: transparent;
+      }
+      span {
+        display: block;
+      }
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      button {
+        width: 48%;
+        padding: 15px 0;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+      }
+      .random {
+        background-color: rgb(56, 136, 241);
+      }
+      .copy {
+        background-color: rgb(241, 57, 57);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="generator">
+      <h1>Color Generator</h1>
+      <div class="color"></div>
+      <div class="code">
+        <input type="text" class="hex-code" value="#fac000" readonly />
+        <span class="rgb-code">rgb(250, 192, 0)</span>
+      </div>
+      <div class="buttons">
+        <button class="random">Generate</button>
+        <button class="copy">Copy Hex</button>
+      </div>
+    </div>
+    <script>
+      const color = document.querySelector('.color');
+      const code = document.querySelector('.hex-code');
+      const rgbCode = document.querySelector('.rgb-code');
+      const randomColor = document.querySelector('.random');
+      const copyColor = document.querySelector('.copy');
+
+      let hexString = '0123456789abcdef';
+
+      function getHexCode() {
+        let hexCode = '#';
+        for (let i = 0; i < 6; i++) {
+          hexCode += hexString[Math.floor(Math.random() * hexString.length)];
+        }
+        color.classList.remove('show');
+        setTimeout(() => {
+          color.classList.add('show');
+        }, 10);
+        color.style.backgroundColor = hexCode;
+
+        getCode(hexCode);
+      }
+
+      function getCode(hexCode) {
+        let prop = window.getComputedStyle(color, null).getPropertyValue('background-color');
+        code.value = hexCode;
+        rgbCode.innerText = prop;
+      }
+
+      randomColor.addEventListener('click', getHexCode);
+
+      copyColor.addEventListener('click', () => {
+        code.select();
+        document.execCommand('copy');
+      });
+    </script>
+  </body>
+</html>
