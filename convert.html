@@ -112,23 +112,31 @@
         const ptoE = document.querySelector('.pte').value;
         const etoP = document.querySelector('.etp').value;
 
-        if (ptoE == '' && etoP == '') {
-          alert('변환하려는 값을 입력해주세요!');
-          return;
-        }
+        ptoE == '' && etoP == ''
+          ? alert('변환하려는 값을 입력해주세요!')
+          : ptoE != '' && etoP != ''
+          ? alert('변환하려는 값을 하나만 입력해주세요!')
+          : ptoE != ''
+          ? convertPX(ptoE, base)
+          : ConvertEM(etoP, base);
 
-        if (ptoE != '' && etoP != '') {
-          alert('변환하려는 값을 하나만 입력해주세요!');
-          return;
-        }
+        // if (ptoE == '' && etoP == '') {
+        //   alert('변환하려는 값을 입력해주세요!');
+        //   return;
+        // }
 
-        if (ptoE != '') {
-          convertPX(ptoE, base);
-        }
+        // if (ptoE != '' && etoP != '') {
+        //   alert('변환하려는 값을 하나만 입력해주세요!');
+        //   return;
+        // }
 
-        if (etoP != '') {
-          ConvertEM(etoP, base);
-        }
+        // if (ptoE != '') {
+        //   convertPX(ptoE, base);
+        // }
+
+        // if (etoP != '') {
+        //   ConvertEM(etoP, base);
+        // }
       }
 
       function convertPX(ptoE, base) {
