@@ -142,8 +142,8 @@
       function convertPX(ptoE, base) {
         const convertEm = `${+ptoE / +base}`;
         result.innerText = `${convertEm}em`;
+
         resultPercent.innerText = `( ${convertEm * 100}% )`;
-        const resultSize = document.querySelector('.result_size');
         resultSize.style.fontSize = `${convertEm}em`;
 
         document.querySelector('.pte').value = '';
@@ -152,6 +152,7 @@
       function ConvertEM(etoP, base) {
         const convertPx = `${+etoP * +base}`;
         result.innerText = `${convertPx}px`;
+
         resultPercent.innerText = `( ${+etoP * 100}% )`;
         resultSize.style.fontSize = `${convertPx}px`;
 
