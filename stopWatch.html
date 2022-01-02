@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        display: grid;
+        place-items: center;
+        background-color: #fff;
+        overflow: hidden;
+      }
+      .watch {
+        position: relative;
+        width: 400px;
+        padding: 50px 0 30px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background-color: #444;
+      }
+      .time {
+        position: relative;
+        width: 70%;
+        margin: 0 auto 30px auto;
+        padding: 30px 0;
+        color: #fff;
+        font-size: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 5px;
+        background-color: rgba(182, 216, 243, 0.25);
+      }
+      .buttons {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+      }
+      button {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 30px;
+        color: #fff;
+        font-size: 1em;
+        border: none;
+        border-radius: 50%;
+        background-color: rgb(51, 51, 51);
+        box-shadow: 5px 5px 8px rgb(43, 43, 43), -5px -5px 8px rgb(92, 92, 92), inset -5px -5px 5px rgb(41, 34, 34);
+      }
+      button:nth-of-type(1) {
+        background-color: rgb(185, 33, 33);
+        box-shadow: 5px 5px 8px rgb(75, 48, 48), -5px -5px 8px rgb(92, 92, 92), inset -5px -5px 5px rgb(126, 12, 12);
+      }
+      .stopTimer {
+        width: 70%;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: rgba(182, 216, 243, 0.25);
+      }
+      span {
+        display: block;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="watch">
+      <div class="time">00 : 00 : 00 : 00</div>
+      <div class="buttons">
+        <button class="stop">Stop</button>
+        <button class="start">Start</button>
+        <button class="reset">Reset</button>
+      </div>
+      <div class="stopTimer"></div>
+    </div>
+  </body>
+
+  <script>
+    // start를 누르면 시간이 흐름??
+    // stop을 누르면 시간이 멈추고 흐른 시간이 기록됨
+    // reset을 누르면 시간이 다시 00:00:00으로 돌아감
+
+    let [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
+    let timerRef = document.querySelector('.time');
+    let currentInterval = null;
+
+    document.querySelector('.start').addEventListener('click', () => {
+      if (currentInterval !== null) {
+        clearInterval(currentInterval);
+      }
+      currentInterval = setInterval(displayTimer, 10);
+    });
+
+    document.querySelector('.stop').addEventListener('click', () => {
+      clearInterval(currentInterval);
+      document.querySelector('.stopTimer').innerHTML += `<span>${timerRef.innerText}</span>`;
+    });
+
+    document.querySelector('.reset').addEventListener('click', () => {
+      clearInterval(currentInterval);
+      [milliseconds, seconds, minutes, hours] = [0, 0, 0, 0];
+      timerRef.innerHTML = '00 : 00 : 00 : 00 ';
+      document.querySelector('.stopTimer').innerText = '';
+    });
+
+    function displayTimer() {
+      milliseconds += 1;
+      if (milliseconds == 100) {
+        milliseconds = 0;
+        seconds++;
+        if (seconds == 60) {
+          seconds = 0;
+          minutes++;
+          if (minutes == 60) {
+            minutes = 0;
+            hours++;
+          }
+        }
+      }
+
+      let h = hours < 10 ? '0' + hours : hours;
+      let m = minutes < 10 ? '0' + minutes : minutes;
+      let s = seconds < 10 ? '0' + seconds : seconds;
+      let ms = milliseconds < 10 ? '0' + milliseconds : milliseconds;
+
+      timerRef.innerHTML = ` ${h} : ${m} : ${s} : ${ms}`;
+    }
+  </script>
+</html>
